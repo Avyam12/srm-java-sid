@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class InventoryManager {
@@ -11,10 +11,6 @@ public class InventoryManager {
         products = FileManager.loadProducts();
         categories = FileManager.loadCategories();
     }
-
-    // =========================================================
-    // PRODUCT OPERATIONS
-    // =========================================================
 
     // Add Product
     public boolean addProduct(Product product) {
@@ -122,10 +118,6 @@ public class InventoryManager {
         return true;
     }
 
-    // =========================================================
-    // STOCK OPERATIONS
-    // =========================================================
-
     // Add Stock
     public boolean addStock(int productId, int quantity) {
 
@@ -209,10 +201,6 @@ public class InventoryManager {
         System.out.printf("Total Inventory Value : $%.2f%n", totalValuation);
         System.out.println("---------------------------------------------");
     }
-
-    // =========================================================
-    // CATEGORY OPERATIONS
-    // =========================================================
 
     // Add Category
     public boolean addCategory(Category category) {
@@ -301,10 +289,6 @@ public class InventoryManager {
 
         return true;
     }
-
-    // =========================================================
-    // UTILITY METHODS
-    // =========================================================
 
     public int getNextProductId() {
 
