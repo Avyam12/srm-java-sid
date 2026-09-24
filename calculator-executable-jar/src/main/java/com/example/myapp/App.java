@@ -14,7 +14,7 @@ public class App implements ActionListener
     JFrame frame;
     JPanel panel;
     JTextField t1, t2, tresult;
-    JButton addBtn, subBtn, mulBtn, divBtn, exitBtn;
+    JButton addBtn, subBtn, mulBtn, divBtn, clearBtn, exitBtn;
 
     public App() 
     {
@@ -40,6 +40,7 @@ public class App implements ActionListener
         subBtn = new JButton("SUBTRACT");
         mulBtn = new JButton("MULTIPLY");
         divBtn = new JButton("DIV");
+        clearBtn = new JButton("CLEAR");
         exitBtn = new JButton("EXIT");
 
         panel.setLayout(null);   // <--- IMPORTANT
@@ -55,13 +56,15 @@ public class App implements ActionListener
         subBtn.setBounds(160, 200, 120, 25);
         mulBtn.setBounds(290, 200, 120, 25);
         divBtn.setBounds(50, 250, 100, 25);
-        exitBtn.setBounds(160, 250, 100, 25);
+        clearBtn.setBounds(160, 250, 120, 25);
+        exitBtn.setBounds(290, 250, 120, 25);
 
         // Add listeners
         addBtn.addActionListener(this);
         subBtn.addActionListener(this);
         mulBtn.addActionListener(this);
         divBtn.addActionListener(this);
+        clearBtn.addActionListener(this);
         exitBtn.addActionListener(this);
 
         // Add components to panel
@@ -70,6 +73,7 @@ public class App implements ActionListener
         panel.add(l3); panel.add(tresult);
         panel.add(addBtn); panel.add(subBtn);
         panel.add(mulBtn); panel.add(divBtn);
+        panel.add(clearBtn);
         panel.add(exitBtn);
 
         frame.add(panel);
@@ -82,6 +86,14 @@ public class App implements ActionListener
         if (e.getSource() == exitBtn) 
         {
             System.exit(0);
+        }
+        if (e.getSource() == clearBtn) 
+        {
+            t1.setText("");
+            t2.setText("");
+            tresult.setText("");
+            t1.requestFocus();
+            return;
         }
         try 
         {

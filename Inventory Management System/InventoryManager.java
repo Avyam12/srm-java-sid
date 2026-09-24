@@ -186,6 +186,30 @@ public class InventoryManager {
         System.out.println("----------------------------------------------");
     }
 
+    // Display Inventory Summary & Valuation Report
+    public void displayInventorySummary() {
+
+        if (products.isEmpty()) {
+            System.out.println("\nNo products available in inventory.");
+            return;
+        }
+
+        int totalProducts = products.size();
+        int totalStockUnits = 0;
+        double totalValuation = 0.0;
+
+        for (Product product : products) {
+            totalStockUnits += product.getStock();
+            totalValuation += product.getPrice() * product.getStock();
+        }
+
+        System.out.println("\n------------- INVENTORY SUMMARY -------------");
+        System.out.println("Total Product Types   : " + totalProducts);
+        System.out.println("Total Units in Stock  : " + totalStockUnits);
+        System.out.printf("Total Inventory Value : $%.2f%n", totalValuation);
+        System.out.println("---------------------------------------------");
+    }
+
     // =========================================================
     // CATEGORY OPERATIONS
     // =========================================================

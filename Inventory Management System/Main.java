@@ -37,6 +37,10 @@ public class Main
                     break;
 
                 case 5:
+                    manager.displayInventorySummary();
+                    break;
+
+                case 6:
                     System.out.println("\nThank you for using");
                     System.out.println("Inventory Management System.");
 
@@ -64,7 +68,8 @@ public class Main
         System.out.println("2. Category Management");
         System.out.println("3. Stock Management");
         System.out.println("4. Low Stock Report");
-        System.out.println("5. Exit");
+        System.out.println("5. Inventory Summary Report");
+        System.out.println("6. Exit");
 
         System.out.println("==========================================");
     }
