@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Features - Student Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="container container-wide">
+    <!-- Header Card -->
+    <div class="card text-center">
+      <span class="badge">System Operations</span>
+      <h1>Project Features</h1>
+      <p>Manage student records with complete Create, Read, Update, Delete, and Search operations.</p>
+
+      <!-- Quick Feature Jump Pill Links -->
+      <div class="feature-nav">
+        <a href="#add-section">&#10003; Add Student</a>
+        <a href="#view-section">&#10003; View Student</a>
+        <a href="#search-section">&#10003; Search Student</a>
+        <a href="#update-section">&#10003; Update Student</a>
+        <a href="#delete-section">&#10003; Delete Student</a>
+        <a href="#table-section">&#10003; Records Table</a>
+      </div>
+    </div>
+
+    <!-- ADD STUDENT CARD -->
+    <div class="card" id="add-section">
+      <div class="card-header">
+        <h2>Add Student</h2>
+        <span class="badge">New Record</span>
+      </div>
+      <form id="addForm" onsubmit="handleAddStudent(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="addRoll">Roll No:</label>
+            <input type="text" id="addRoll" placeholder="e.g. 106" required>
+          </div>
+          <div class="form-group">
+            <label for="addName">Student Name:</label>
+            <input type="text" id="addName" placeholder="e.g. John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="addAadhar">Aadhar Number:</label>
+            <input type="text" id="addAadhar" placeholder="e.g. 1234-5678-9012" required>
+          </div>
+          <div class="form-group">
+            <label for="addCourse">Course:</label>
+            <input type="text" id="addCourse" placeholder="e.g. B.Tech CSE" required>
+          </div>
+          <div class="form-group">
+            <label for="addYear">Year:</label>
+            <input type="text" id="addYear" placeholder="e.g. 2nd Year" required>
+          </div>
+          <div class="form-group">
+            <label for="addEmail">Email:</label>
+            <input type="email" id="addEmail" placeholder="e.g. john@example.com" required>
+          </div>
+        </div>
+        <button type="submit" class="btn">Add Student</button>
+      </form>
+      <p id="addMessage" class="status-msg" style="color: var(--success);"></p>
+    </div>
+
+    <!-- VIEW STUDENT CARD -->
+    <div class="card" id="view-section">
+      <div class="card-header">
+        <h2>View Student</h2>
+        <span class="badge">Query by Roll No</span>
+      </div>
+      <div class="input-row">
+        <label for="viewRollInput" style="font-weight: 500; font-size: 0.88rem;">Enter Roll No to View:</label>
+        <input type="text" id="viewRollInput" placeholder="e.g. 101">
+        <button type="button" class="btn" onclick="handleViewStudent()">View Student</button>
+      </div>
+      <div id="viewOutput"></div>
+    </div>
+
+    <!-- SEARCH STUDENT CARD -->
+    <div class="card" id="search-section">
+      <div class="card-header">
+        <h2>Search Student</h2>
+        <span class="badge">Live Filter</span>
+      </div>
+      <div class="input-row">
+        <label for="searchInput" style="font-weight: 500; font-size: 0.88rem;">Search (Roll, Name, Course, Aadhar):</label>
+        <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Type to filter instantly...">
+        <button type="button" class="btn btn-secondary" onclick="resetSearch()">Show All</button>
+      </div>
+    </div>
+
+    <!-- UPDATE STUDENT CARD -->
+    <div class="card" id="update-section">
+      <div class="card-header">
+        <h2>Update Student</h2>
+        <span class="badge">Modify Record</span>
+      </div>
+      <div class="input-row">
+        <label for="updateSearchRoll" style="font-weight: 500; font-size: 0.88rem;">Enter Roll No to Edit:</label>
+        <input type="text" id="updateSearchRoll" placeholder="e.g. 101">
+        <button type="button" class="btn btn-secondary" onclick="loadStudentForUpdate()">Load Data</button>
+      </div>
+
+      <form id="updateForm" onsubmit="handleUpdateStudent(event)" style="margin-top: 1rem;">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="upRoll">Roll No (Read-Only):</label>
+            <input type="text" id="upRoll" readonly>
+          </div>
+          <div class="form-group">
+            <label for="upName">Student Name:</label>
+            <input type="text" id="upName">
+          </div>
+          <div class="form-group">
+            <label for="upAadhar">Aadhar Number:</label>
+            <input type="text" id="upAadhar">
+          </div>
+          <div class="form-group">
+            <label for="upCourse">Course:</label>
+            <input type="text" id="upCourse">
+          </div>
+          <div class="form-group">
+            <label for="upYear">Year:</label>
+            <input type="text" id="upYear">
+          </div>
+          <div class="form-group">
+            <label for="upEmail">Email:</label>
+            <input type="email" id="upEmail">
+          </div>
+        </div>
+        <button type="submit" id="updateBtn" class="btn" disabled>Save Update</button>
+      </form>
+      <p id="updateMessage" class="status-msg" style="color: var(--primary);"></p>
+    </div>
+
+    <!-- DELETE STUDENT CARD -->
+    <div class="card" id="delete-section">
+      <div class="card-header">
+        <h2>Delete Student</h2>
+        <span class="badge" style="background: var(--danger-light); color: var(--danger);">Danger Zone</span>
+      </div>
+      <div class="input-row">
+        <label for="deleteRollInput" style="font-weight: 500; font-size: 0.88rem;">Enter Roll No to Delete:</label>
+        <input type="text" id="deleteRollInput" placeholder="e.g. 101">
+        <button type="button" class="btn btn-danger" onclick="handleDeleteByInput()">Delete Student</button>
+      </div>
+      <p id="deleteMessage" class="status-msg" style="color: var(--danger);"></p>
+    </div>
+
+    <!-- STUDENT DATA TABLE CARD -->
+    <div class="card" id="table-section">
+      <div class="card-header">
+        <h2>Student Records (Tabular View)</h2>
+        <span class="badge">Live Database</span>
+      </div>
+      <div class="table-responsive">
+        <table id="studentTable">
+          <thead>
+            <tr>
+              <th>Roll No</th>
+              <th>Student Name</th>
+              <th>Aadhar Number</th>
+              <th>Course</th>
+              <th>Year</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentTableBody">
+            <!-- Rows generated via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Centered Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html">Home</a>
+      <a href="about.html">Project Creator</a>
+      <a href="product.html">Product</a>
+      <a href="features.html" class="active">Features</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+
+  <script>
+    // Initial sample student records
+    const initialStudents = [
+      { roll: "101", name: "Rahul Kumar", aadhar: "5421-8901-2345", course: "B.Tech CSE", year: "3rd Year", email: "rahul@example.com" },
+      { roll: "102", name: "Priya Sharma", aadhar: "6532-1234-8765", course: "B.Tech IT", year: "3rd Year", email: "priya@example.com" },
+      { roll: "103", name: "Aman Verma", aadhar: "7643-9876-5432", course: "B.Tech ECE", year: "2nd Year", email: "aman@example.com" },
+      { roll: "104", name: "Sneha Patel", aadhar: "8754-3456-7890", course: "B.Tech CSE", year: "4th Year", email: "sneha@example.com" },
+      { roll: "105", name: "Rohit Singh", aadhar: "9865-6543-2109", course: "B.Tech ME", year: "1st Year", email: "rohit@example.com" }
+    ];
+
+    function getStudents() {
+      const stored = localStorage.getItem("students_list");
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch (e) {
+          return initialStudents;
+        }
+      }
+      localStorage.setItem("students_list", JSON.stringify(initialStudents));
+      return initialStudents;
+    }
+
+    function saveStudents(students) {
+      localStorage.setItem("students_list", JSON.stringify(students));
+      renderTable(students);
+    }
+
+    function renderTable(students) {
+      const tbody = document.getElementById("studentTableBody");
+      tbody.innerHTML = "";
+
+      if (students.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='7' style='text-align:center; padding: 1.5rem; color: var(--text-muted);'>No student records found.</td></tr>";
+        return;
+      }
+
+      students.forEach(st => {
+        const tr = document.createElement("tr");
+        tr.id = "row-" + st.roll;
+        tr.innerHTML = `
+          <td><strong>${st.roll}</strong></td>
+          <td>${st.name}</td>
+          <td>${st.aadhar}</td>
+          <td>${st.course}</td>
+          <td>${st.year}</td>
+          <td>${st.email}</td>
+          <td>
+            <button type="button" onclick="viewSpecific('${st.roll}')">View</button>
+            <button type="button" onclick="loadForEdit('${st.roll}')">Edit</button>
+            <button type="button" onclick="deleteSpecific('${st.roll}')">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ADD STUDENT
+    function handleAddStudent(e) {
+      e.preventDefault();
+      const roll = document.getElementById("addRoll").value.trim();
+      const name = document.getElementById("addName").value.trim();
+      const aadhar = document.getElementById("addAadhar").value.trim();
+      const course = document.getElementById("addCourse").value.trim();
+      const year = document.getElementById("addYear").value.trim();
+      const email = document.getElementById("addEmail").value.trim();
+
+      const students = getStudents();
+      const exists = students.some(s => s.roll.toLowerCase() === roll.toLowerCase());
+
+      const msg = document.getElementById("addMessage");
+      if (exists) {
+        msg.style.color = "var(--danger)";
+        msg.textContent = "Error: Student with Roll No '" + roll + "' already exists!";
+        return;
+      }
+
+      students.push({ roll, name, aadhar, course, year, email });
+      saveStudents(students);
+
+      document.getElementById("addForm").reset();
+      msg.style.color = "var(--success)";
+      msg.textContent = "Success: Student " + name + " (Roll: " + roll + ") has been added successfully!";
+
+      setTimeout(() => { msg.textContent = ""; }, 5000);
+    }
+
+    // VIEW STUDENT
+    function handleViewStudent() {
+      const roll = document.getElementById("viewRollInput").value.trim();
+      viewSpecific(roll);
+    }
+
+    function viewSpecific(roll) {
+      const out = document.getElementById("viewOutput");
+      if (!roll) {
+        out.innerHTML = "<p style='color:var(--danger); margin-top:0.5rem;'>Please enter a Roll Number to view.</p>";
+        return;
+      }
+
+      const students = getStudents();
+      const st = students.find(s => s.roll.toLowerCase() === roll.toLowerCase());
+
+      if (st) {
+        out.innerHTML = `
+          <div class="details-box">
+            <h3 style="margin-top:0; color:var(--primary);">Student Details Found</h3>
+            <div class="info-grid">
+              <div class="info-item"><div class="label">Roll No</div><div class="value">${st.roll}</div></div>
+              <div class="info-item"><div class="label">Name</div><div class="value">${st.name}</div></div>
+              <div class="info-item"><div class="label">Aadhar Number</div><div class="value">${st.aadhar}</div></div>
+              <div class="info-item"><div class="label">Course</div><div class="value">${st.course}</div></div>
+              <div class="info-item"><div class="label">Year</div><div class="value">${st.year}</div></div>
+              <div class="info-item"><div class="label">Email</div><div class="value">${st.email}</div></div>
+            </div>
+          </div>
+        `;
+
+        // Highlight table row briefly
+        const row = document.getElementById("row-" + st.roll);
+        if (row) {
+          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        out.innerHTML = "<p style='color:var(--danger); margin-top:0.5rem;'>No student found with Roll No '" + roll + "'.</p>";
+      }
+    }
+
+    // SEARCH STUDENT
+    function handleSearch() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const students = getStudents();
+      const filtered = students.filter(s => 
+        s.roll.toLowerCase().includes(query) ||
+        s.name.toLowerCase().includes(query) ||
+        s.course.toLowerCase().includes(query) ||
+        s.aadhar.toLowerCase().includes(query)
+      );
+      renderTable(filtered);
+    }
+
+    function resetSearch() {
+      document.getElementById("searchInput").value = "";
+      renderTable(getStudents());
+    }
+
+    // LOAD FOR UPDATE
+    function loadStudentForUpdate() {
+      const roll = document.getElementById("updateSearchRoll").value.trim();
+      loadForEdit(roll);
+    }
+
+    function loadForEdit(roll) {
+      const msg = document.getElementById("updateMessage");
+      if (!roll) {
+        alert("Please enter a Roll No to load.");
+        return;
+      }
+
+      const students = getStudents();
+      const st = students.find(s => s.roll.toLowerCase() === roll.toLowerCase());
+
+      if (!st) {
+        msg.style.color = "var(--danger)";
+        msg.textContent = "Student with Roll No '" + roll + "' not found.";
+        document.getElementById("updateBtn").disabled = true;
+        return;
+      }
+
+      document.getElementById("upRoll").value = st.roll;
+      document.getElementById("upName").value = st.name;
+      document.getElementById("upAadhar").value = st.aadhar;
+      document.getElementById("upCourse").value = st.course;
+      document.getElementById("upYear").value = st.year;
+      document.getElementById("upEmail").value = st.email;
+      document.getElementById("updateBtn").disabled = false;
+
+      msg.style.color = "var(--info)";
+      msg.textContent = "Data loaded for Roll No: " + st.roll + ". You can modify details and click 'Save Update'.";
+      document.getElementById("update-section").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // UPDATE STUDENT
+    function handleUpdateStudent(e) {
+      e.preventDefault();
+      const roll = document.getElementById("upRoll").value;
+      const students = getStudents();
+      const index = students.findIndex(s => s.roll.toLowerCase() === roll.toLowerCase());
+
+      const msg = document.getElementById("updateMessage");
+      if (index === -1) {
+        msg.style.color = "var(--danger)";
+        msg.textContent = "Error: Student not found.";
+        return;
+      }
+
+      students[index].name = document.getElementById("upName").value.trim();
+      students[index].aadhar = document.getElementById("upAadhar").value.trim();
+      students[index].course = document.getElementById("upCourse").value.trim();
+      students[index].year = document.getElementById("upYear").value.trim();
+      students[index].email = document.getElementById("upEmail").value.trim();
+
+      saveStudents(students);
+
+      msg.style.color = "var(--success)";
+      msg.textContent = "Success: Student (Roll: " + roll + ") details updated successfully!";
+      document.getElementById("updateBtn").disabled = true;
+      document.getElementById("updateForm").reset();
+
+      setTimeout(() => { msg.textContent = ""; }, 5000);
+    }
+
+    // DELETE STUDENT
+    function handleDeleteByInput() {
+      const roll = document.getElementById("deleteRollInput").value.trim();
+      if (!roll) {
+        document.getElementById("deleteMessage").textContent = "Please enter a Roll No to delete.";
+        return;
+      }
+      deleteSpecific(roll);
+    }
+
+    function deleteSpecific(roll) {
+      const students = getStudents();
+      const index = students.findIndex(s => s.roll.toLowerCase() === roll.toLowerCase());
+      const msg = document.getElementById("deleteMessage");
+
+      if (index === -1) {
+        msg.style.color = "var(--danger)";
+        msg.textContent = "Student with Roll No '" + roll + "' does not exist.";
+        return;
+      }
+
+      const confirmed = confirm("Are you sure you want to delete student with Roll No " + roll + "?");
+      if (!confirmed) return;
+
+      const removed = students.splice(index, 1);
+      saveStudents(students);
+
+      msg.style.color = "var(--success)";
+      msg.textContent = "Success: Student " + removed[0].name + " (Roll: " + roll + ") was deleted.";
+      document.getElementById("deleteRollInput").value = "";
+
+      // Clear view output if showing deleted student
+      const out = document.getElementById("viewOutput");
+      out.innerHTML = "";
+
+      setTimeout(() => { msg.textContent = ""; }, 5000);
+    }
+
+    // Initial load on page ready
+    window.onload = function() {
+      renderTable(getStudents());
+    };
+  </script>
+
+</body>
+</html>
