@@ -13,15 +13,15 @@
 
   --border: #e2e8f0;
   --border-subtle: #edf2f7;
-  --border-focus: #6366f1;
+  --border-focus: #06b6d4;
 
   --text-main: #1e293b;
   --text-muted: #64748b;
   --text-light: #94a3b8;
 
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --primary-light: #eef2ff;
+  --primary: #0891b2;
+  --primary-hover: #0e7490;
+  --primary-light: #ecfeff;
 
   --danger: #ef4444;
   --danger-hover: #dc2626;
@@ -217,7 +217,7 @@ p:last-child {
 .feature-nav a:hover {
   background: var(--primary-light);
   color: var(--primary);
-  border-color: #c7d2fe;
+  border-color: #a5f3fc;
 }
 
 /* Forms & Inputs */
@@ -274,7 +274,7 @@ input[type="email"]:focus,
 input[type="number"]:focus,
 input[type="search"]:focus {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
 }
 
 .input-row input {
